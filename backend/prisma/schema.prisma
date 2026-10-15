@@ -1,0 +1,121 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  IN_PROGRESS
+  CONVERTED
+  CLOSED
+}
+
+enum ApplicationStatus {
+  NEW
+  REVIEWED
+  SHORTLISTED
+  REJECTED
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         String   @default("admin")
+  createdAt    DateTime @default(now())
+}
+
+model ContactLead {
+  id          Int        @id @default(autoincrement())
+  name        String
+  email       String
+  phone       String?
+  company     String?
+  service     String?
+  industry    String?
+  projectType String?
+  stage       String?
+  timeline    String?
+  budget      String?
+  message     String
+  status      LeadStatus @default(NEW)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Service {
+  id               Int      @id @default(autoincrement())
+  slug             String   @unique
+  title            String
+  shortDescription String
+  icon             String
+  heroTitle        String
+  heroSubtitle     String
+  benefits         Json
+  capabilities     Json     @default("[]")
+  process          Json
+  technologies     Json
+  faqs             Json
+  order            Int      @default(0)
+  createdAt        DateTime @default(now())
+}
+
+model Industry {
+  id               Int      @id @default(autoincrement())
+  slug             String   @unique
+  title            String
+  shortDescription String
+  icon             String
+  heroTitle        String
+  heroSubtitle     String
+  features         Json
+  order            Int      @default(0)
+  createdAt        DateTime @default(now())
+}
+
+model Portfolio {
+  id           Int      @id @default(autoincrement())
+  slug         String   @unique
+  title        String
+  industry     String
+  category     String   @default("Web")
+  summary      String
+  problem      String
+  solution     String
+  architecture String?
+  lessons      String?
+  features     Json
+  technologies Json
+  results      Json
+  image        String
+  featured     Boolean  @default(false)
+  isDemo       Boolean  @default(true)
+  order        Int      @default(0)
+  createdAt    DateTime @default(now())
+}
+
+model CareerApplication {
+  id           Int               @id @default(autoincrement())
+  name         String
+  email        String
+  phone        String?
+  roleInterest String
+  resumeLink   String?
+  message      String
+  status       ApplicationStatus @default(NEW)
+  createdAt    DateTime          @default(now())
+}
+
+model Faq {
+  id       Int    @id @default(autoincrement())
+  question String
+  answer   String
+  order    Int    @default(0)
+}

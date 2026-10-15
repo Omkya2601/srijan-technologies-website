@@ -1,0 +1,50 @@
+import {
+  Globe,
+  Smartphone,
+  ShoppingCart,
+  Code2,
+  Palette,
+  Server,
+  Cloud,
+  Wrench,
+  GraduationCap,
+  Building2,
+  HeartPulse,
+  ShoppingBag,
+  Landmark,
+  Plane,
+  Building,
+  Layers3,
+  Sparkles,
+  Bot,
+  BrainCircuit,
+  MessagesSquare,
+  HelpCircle,
+} from 'lucide-react';
+
+const icons = {
+  Globe,
+  Smartphone,
+  ShoppingCart,
+  Code2,
+  Palette,
+  Server,
+  Cloud,
+  Wrench,
+  GraduationCap,
+  Building2,
+  HeartPulse,
+  ShoppingBag,
+  Landmark,
+  Plane,
+  Building,
+  Layers3,
+  Sparkles,
+  Bot,
+  BrainCircuit,
+  MessagesSquare,
+};
+
+export function getIcon(name) {
+  return icons[name] || HelpCircle;
+}

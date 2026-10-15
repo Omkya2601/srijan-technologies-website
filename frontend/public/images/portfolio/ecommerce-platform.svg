@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400">
+  <defs>
+    <linearGradient id="g4" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#92400e"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="400" fill="url(#g4)"/>
+  <g opacity="0.15">
+    <circle cx="560" cy="60" r="130" fill="#fff"/>
+    <circle cx="60" cy="360" r="140" fill="#fff"/>
+  </g>
+  <g fill="#fff" opacity="0.95">
+    <path d="M250 170 h140 l-15 90 h-110 z"/>
+    <circle cx="270" cy="290" r="14"/>
+    <circle cx="370" cy="290" r="14"/>
+  </g>
+  <text x="50%" y="340" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" fill="#fff" font-weight="700">E-Commerce Platform</text>
+</svg>

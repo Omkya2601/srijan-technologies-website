@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400">
+  <defs>
+    <linearGradient id="g3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ff5c7c"/>
+      <stop offset="100%" stop-color="#8f1c3a"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="400" fill="url(#g3)"/>
+  <g opacity="0.15">
+    <circle cx="80" cy="80" r="120" fill="#fff"/>
+    <circle cx="560" cy="340" r="150" fill="#fff"/>
+  </g>
+  <g fill="#fff" opacity="0.95">
+    <rect x="290" y="150" width="60" height="160" rx="8"/>
+    <rect x="240" y="200" width="160" height="60" rx="8"/>
+  </g>
+  <text x="50%" y="340" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" fill="#fff" font-weight="700">Hospital Management System</text>
+</svg>
