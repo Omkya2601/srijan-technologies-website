@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Clock, Navigation } from 'lucide-react';
+import { Mail, Phone, MapPin, Clock, Navigation, MessageCircle } from 'lucide-react';
 import Seo from '../components/common/Seo';
 import ContactForm from '../components/common/ContactForm';
 import siteConfig from '../config/site';
@@ -13,6 +13,13 @@ const mapDirectionsHref = `https://www.google.com/maps/dir/?api=1&destination=${
 const CONTACT_DETAILS = [
   { icon: Mail, label: 'Email', value: siteConfig.email, href: `mailto:${siteConfig.email}` },
   { icon: Phone, label: 'Phone', value: siteConfig.phoneDisplay, href: `tel:${siteConfig.phone}` },
+  {
+    icon: MessageCircle,
+    label: 'WhatsApp',
+    value: 'Chat with us on WhatsApp',
+    href: `https://wa.me/${siteConfig.whatsappNumber}`,
+    external: true,
+  },
   {
     icon: MapPin,
     label: 'Location',
@@ -63,7 +70,11 @@ export default function Contact() {
                   <div>
                     <p className="text-sm font-semibold text-ink-400">{detail.label}</p>
                     {detail.href ? (
-                      <a href={detail.href} className="font-semibold hover:text-primary-600">
+                      <a
+                        href={detail.href}
+                        className="font-semibold hover:text-primary-600"
+                        {...(detail.external && { target: '_blank', rel: 'noopener noreferrer' })}
+                      >
                         {detail.value}
                       </a>
                     ) : (

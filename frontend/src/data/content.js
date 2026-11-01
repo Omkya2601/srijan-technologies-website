@@ -1115,7 +1115,7 @@ export const portfolio = [
       "Faster fee collection with online payment reminders",
       "Improved parent engagement through real-time updates"
     ],
-    "image": "/images/portfolio/school-management.svg",
+    "image": "/images/portfolio/school-management.jpg",
     "order": 1
   },
   {
@@ -1149,7 +1149,7 @@ export const portfolio = [
       "Faster property search improved client experience",
       "Clear visibility into agent performance for management"
     ],
-    "image": "/images/portfolio/real-estate.svg",
+    "image": "/images/portfolio/real-estate.jpg",
     "order": 2
   },
   {
@@ -1183,7 +1183,7 @@ export const portfolio = [
       "Eliminated duplicate patient records across departments",
       "Faster billing cycles with automated invoicing"
     ],
-    "image": "/images/portfolio/hospital-management.svg",
+    "image": "/images/portfolio/hospital-management.jpg",
     "order": 3
   },
   {
@@ -1217,7 +1217,7 @@ export const portfolio = [
       "Improved margins by reducing marketplace dependency",
       "Actionable sales insights through the analytics dashboard"
     ],
-    "image": "/images/portfolio/ecommerce-platform.svg",
+    "image": "/images/portfolio/ecommerce-platform.jpg",
     "order": 4
   },
   {
@@ -1251,7 +1251,7 @@ export const portfolio = [
       "Reduced manual coordination workload for staff",
       "Clearer visibility into booking trends and inventory"
     ],
-    "image": "/images/portfolio/travel-booking.svg",
+    "image": "/images/portfolio/travel-booking.jpg",
     "order": 5
   },
   {
@@ -1285,7 +1285,7 @@ export const portfolio = [
       "Reduced tool sprawl by consolidating internal systems",
       "Faster reporting through automated dashboards"
     ],
-    "image": "/images/portfolio/business-platform.svg",
+    "image": "/images/portfolio/business-platform.jpg",
     "order": 6
   }
 ];

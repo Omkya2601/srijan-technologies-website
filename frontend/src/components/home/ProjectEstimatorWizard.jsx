@@ -130,9 +130,9 @@ export default function ProjectEstimatorWizard() {
     if (!validateContact()) return;
     setSubmitting(true);
     try {
-      await contactApi.submit(form);
+      const res = await contactApi.submit(form);
       trackEvent('estimator_completed', { projectType: form.projectType, industry: form.industry });
-      setDone(true);
+      setDone(res);
     } catch (err) {
       toast.error(err.message || 'Something went wrong. Please try again.');
     } finally {
@@ -146,10 +146,11 @@ export default function ProjectEstimatorWizard() {
         <span className="flex h-14 w-14 items-center justify-center rounded-full bg-primary-50 text-primary-600">
           <Check size={28} />
         </span>
-        <h3 className="text-xl font-bold">Request Received</h3>
+        <h3 className="text-xl font-bold">{done.via === 'whatsapp' ? 'Almost Done!' : 'Request Received'}</h3>
         <p className="text-sm text-ink-500">
-          Thanks, {form.name.split(' ')[0]}! We'll review your project details and get back to you within
-          one business day.
+          {done.via === 'whatsapp'
+            ? `Thanks, ${form.name.split(' ')[0]}! WhatsApp has opened with your project details — just tap send there to reach us.`
+            : `Thanks, ${form.name.split(' ')[0]}! We'll review your project details and get back to you within one business day.`}
         </p>
       </div>
     );

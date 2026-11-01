@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { Send } from 'lucide-react';
+import { Check, Send } from 'lucide-react';
 import { contactApi } from '../../services/api';
 import { navServices } from '../../data/navLinks';
 import { trackEvent } from '../../utils/analytics';
@@ -54,6 +54,7 @@ export default function ContactForm({ className = '' }) {
   });
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
+  const [sent, setSent] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -79,7 +80,7 @@ export default function ContactForm({ className = '' }) {
     try {
       const res = await contactApi.submit(form);
       trackEvent('contact_form_submitted', { service: form.service });
-      toast.success(res.message || 'Thanks! We will be in touch shortly.');
+      setSent(res);
       setForm(initialForm);
       setErrors({});
     } catch (err) {
@@ -95,6 +96,21 @@ export default function ContactForm({ className = '' }) {
       setSubmitting(false);
     }
   };
+
+  if (sent) {
+    return (
+      <div className={`flex flex-col items-center gap-4 py-10 text-center ${className}`} role="status">
+        <span className="flex h-14 w-14 items-center justify-center rounded-full bg-primary-50 text-primary-600">
+          <Check size={28} aria-hidden="true" />
+        </span>
+        <h3 className="text-xl font-bold">{sent.via === 'whatsapp' ? 'Almost Done!' : 'Message Sent'}</h3>
+        <p className="max-w-sm text-sm text-ink-500">{sent.message}</p>
+        <button type="button" onClick={() => setSent(null)} className="btn-outline mt-2">
+          Send Another Message
+        </button>
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit} noValidate className={`flex flex-col gap-5 ${className}`}>

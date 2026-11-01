@@ -37,7 +37,7 @@ async function submitForm(subject, payload, successMessage) {
   if (!WEB3FORMS_KEY) {
     const text = [subject, '', ...fields.map(([label, value]) => `${label}: ${value}`)].join('\n');
     window.open(`https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(text)}`, '_blank');
-    return { success: true, message: 'Opening WhatsApp — just tap send to share your details with us.' };
+    return { success: true, via: 'whatsapp', message: 'WhatsApp has opened with your details filled in — just tap send there to reach us.' };
   }
 
   let res;
@@ -65,7 +65,7 @@ async function submitForm(subject, payload, successMessage) {
       status: res.status,
     };
   }
-  return { success: true, message: successMessage };
+  return { success: true, via: 'email', message: successMessage };
 }
 
 export const servicesApi = {

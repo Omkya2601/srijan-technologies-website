@@ -12,7 +12,7 @@ export const siteConfig = {
 
   email: 'omkarjadhav2426@gmail.com',
   salesEmail: 'omkarjadhav2426@gmail.com',
-  phone: '+91 92843 13575',
+  phone: '+919284313575', // used in tel: links — no spaces
   phoneDisplay: '+91 92843 13575',
   whatsappNumber: '919284313575',
 
