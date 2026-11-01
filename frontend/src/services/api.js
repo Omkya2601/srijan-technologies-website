@@ -1,68 +1,108 @@
-import axios from 'axios';
+import { services, industries, portfolio, faqs } from '../data/content';
+import siteConfig from '../config/site';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+// The site is fully static: content comes from data/content.js, and form submissions are
+// emailed through Web3Forms (https://web3forms.com). Without VITE_WEB3FORMS_KEY, forms fall
+// back to opening a pre-filled WhatsApp chat so enquiries are never lost.
+const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY;
 
-const api = axios.create({
-  baseURL: API_URL,
-  headers: { 'Content-Type': 'application/json' },
-});
+// Same { success, data } shape the old REST API returned, so pages and useFetch are unchanged.
+const ok = (data) => Promise.resolve({ success: true, data });
+const bySlug = (items, slug) => ok(items.find((item) => item.slug === slug) || null);
 
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('srijan_admin_token');
-  if (token) config.headers.Authorization = `Bearer ${token}`;
-  return config;
-});
+const FIELD_LABELS = {
+  name: 'Name',
+  email: 'Email',
+  phone: 'Phone',
+  company: 'Company',
+  service: 'Service',
+  industry: 'Industry',
+  projectType: 'Project Type',
+  stage: 'Stage',
+  budget: 'Budget',
+  timeline: 'Timeline',
+  roleInterest: 'Role',
+  resumeLink: 'Resume',
+  message: 'Message',
+};
 
-function unwrap(promise) {
-  return promise
-    .then((res) => res.data)
-    .catch((err) => {
-      const message =
-        err.response?.data?.message || err.message || 'Something went wrong. Please try again.';
-      const details = err.response?.data?.details || null;
-      const status = err.response?.status || 0;
-      throw { message, details, status };
+// [label, value] pairs for the fields the visitor actually filled in.
+function filledFields(payload) {
+  return Object.entries(FIELD_LABELS)
+    .map(([key, label]) => [label, payload[key]?.toString().trim()])
+    .filter(([, value]) => value);
+}
+
+async function submitForm(subject, payload, successMessage) {
+  const fields = filledFields(payload);
+
+  if (!WEB3FORMS_KEY) {
+    const text = [subject, '', ...fields.map(([label, value]) => `${label}: ${value}`)].join('\n');
+    window.open(`https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(text)}`, '_blank');
+    return { success: true, message: 'Opening WhatsApp — just tap send to share your details with us.' };
+  }
+
+  let res;
+  try {
+    res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        access_key: WEB3FORMS_KEY,
+        subject: `${subject} — ${payload.name}`,
+        from_name: siteConfig.name,
+        replyto: payload.email,
+        ...Object.fromEntries(fields),
+      }),
     });
+  } catch {
+    throw { message: 'Network error. Please check your connection and try again.', details: null, status: 0 };
+  }
+
+  const body = await res.json().catch(() => ({}));
+  if (!res.ok || !body.success) {
+    throw {
+      message: body.message || `Could not send your message. Please email us at ${siteConfig.email}.`,
+      details: null,
+      status: res.status,
+    };
+  }
+  return { success: true, message: successMessage };
 }
 
 export const servicesApi = {
-  list: () => unwrap(api.get('/services')),
-  getBySlug: (slug) => unwrap(api.get(`/services/${slug}`)),
+  list: () => ok(services),
+  getBySlug: (slug) => bySlug(services, slug),
 };
 
 export const industriesApi = {
-  list: () => unwrap(api.get('/industries')),
-  getBySlug: (slug) => unwrap(api.get(`/industries/${slug}`)),
+  list: () => ok(industries),
+  getBySlug: (slug) => bySlug(industries, slug),
 };
 
 export const portfolioApi = {
-  list: () => unwrap(api.get('/portfolio')),
-  getBySlug: (slug) => unwrap(api.get(`/portfolio/${slug}`)),
-};
-
-export const contactApi = {
-  submit: (payload) => unwrap(api.post('/contact', payload)),
-};
-
-export const careersApi = {
-  submit: (payload) => unwrap(api.post('/careers', payload)),
+  list: () => ok(portfolio),
+  getBySlug: (slug) => bySlug(portfolio, slug),
 };
 
 export const faqsApi = {
-  list: () => unwrap(api.get('/faqs')),
+  list: () => ok(faqs),
 };
 
-export const authApi = {
-  login: (payload) => unwrap(api.post('/auth/login', payload)),
-  me: () => unwrap(api.get('/auth/me')),
+export const contactApi = {
+  submit: (payload) =>
+    submitForm(
+      'New project enquiry',
+      payload,
+      'Thanks for reaching out — our team will get back to you within one business day.'
+    ),
 };
 
-export const adminApi = {
-  getStats: () => unwrap(api.get('/admin/stats')),
-  listLeads: (status) => unwrap(api.get('/admin/leads', { params: status ? { status } : {} })),
-  getLead: (id) => unwrap(api.get(`/admin/leads/${id}`)),
-  updateLeadStatus: (id, status) => unwrap(api.patch(`/admin/leads/${id}`, { status })),
-  deleteLead: (id) => unwrap(api.delete(`/admin/leads/${id}`)),
+export const careersApi = {
+  submit: (payload) =>
+    submitForm(
+      'New career application',
+      payload,
+      "Thanks for reaching out — we'll review your application and get back to you if there's a fit."
+    ),
 };
-
-export default api;

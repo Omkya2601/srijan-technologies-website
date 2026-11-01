@@ -1,10 +1,6 @@
-import { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import MainLayout from './components/layout/MainLayout';
-import AdminLayout from './components/layout/AdminLayout';
-import ProtectedRoute from './components/admin/ProtectedRoute';
-import LoadingSpinner from './components/common/LoadingSpinner';
 
 import Home from './pages/Home';
 import About from './pages/About';
@@ -21,19 +17,6 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import Terms from './pages/Terms';
 import CookiePolicy from './pages/CookiePolicy';
 import NotFound from './pages/NotFound';
-
-// Admin panel is code-split out of the main marketing site bundle.
-const AdminLogin = lazy(() => import('./pages/admin/AdminLogin'));
-const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
-const AdminLeadDetail = lazy(() => import('./pages/admin/AdminLeadDetail'));
-
-function AdminFallback() {
-  return (
-    <div className="flex min-h-screen items-center justify-center">
-      <LoadingSpinner label="Loading admin panel…" />
-    </div>
-  );
-}
 
 export default function App() {
   return (
@@ -55,35 +38,6 @@ export default function App() {
         <Route path="/cookie-policy" element={<CookiePolicy />} />
         <Route path="/404" element={<NotFound />} />
         <Route path="*" element={<NotFound />} />
-      </Route>
-
-      <Route
-        path="/admin/login"
-        element={
-          <Suspense fallback={<AdminFallback />}>
-            <AdminLogin />
-          </Suspense>
-        }
-      />
-      <Route element={<ProtectedRoute />}>
-        <Route element={<AdminLayout />}>
-          <Route
-            path="/admin/dashboard"
-            element={
-              <Suspense fallback={<AdminFallback />}>
-                <AdminDashboard />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/admin/leads/:id"
-            element={
-              <Suspense fallback={<AdminFallback />}>
-                <AdminLeadDetail />
-              </Suspense>
-            }
-          />
-        </Route>
       </Route>
     </Routes>
   );

@@ -31,13 +31,13 @@ const SECTIONS = [
   {
     heading: '4. Cookies & Tracking Technologies',
     body: [
-      'This website may use browser local storage to remember minor preferences (for example, an admin session token after logging in). We do not currently use third-party advertising or analytics cookies. If that changes, this policy will be updated accordingly.',
+      'This website does not currently use cookies, and we do not use third-party advertising or analytics cookies. If that changes, this policy will be updated accordingly.',
     ],
   },
   {
     heading: '5. Third-Party Services',
     body: [
-      'We may use third-party services to operate this website and our business, such as email providers, hosting providers and WhatsApp for enquiry communication. These providers only receive the information necessary to perform their function and are expected to handle it securely.',
+      'We use third-party services to operate this website and our business. Form submissions are delivered to our inbox by a form-to-email service (Web3Forms) or, where you choose, sent through WhatsApp. We also use hosting and email providers. These providers only receive the information necessary to perform their function and are expected to handle it securely.',
     ],
   },
   {
@@ -49,7 +49,7 @@ const SECTIONS = [
   {
     heading: '7. Data Security',
     body: [
-      'We take reasonable technical and organizational measures to protect the information we hold, including password hashing for admin accounts, authenticated access to lead data, and secure transmission over HTTPS. No method of transmission or storage is completely secure, and we cannot guarantee absolute security.',
+      'We take reasonable technical and organizational measures to protect the information we hold, including limiting access to enquiry emails to our team and secure transmission over HTTPS. No method of transmission or storage is completely secure, and we cannot guarantee absolute security.',
     ],
   },
   {
