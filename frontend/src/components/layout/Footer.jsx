@@ -7,7 +7,6 @@ import Logo from '../common/Logo';
 
 const COMPANY_LINKS = [
   { label: 'About', to: '/about' },
-  { label: 'Careers', to: '/careers' },
   { label: 'Contact', to: '/contact' },
   { label: 'Portfolio', to: '/portfolio' },
 ];

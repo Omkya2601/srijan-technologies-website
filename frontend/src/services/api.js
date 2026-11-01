@@ -21,8 +21,6 @@ const FIELD_LABELS = {
   stage: 'Stage',
   budget: 'Budget',
   timeline: 'Timeline',
-  roleInterest: 'Role',
-  resumeLink: 'Resume',
   message: 'Message',
 };
 
@@ -95,14 +93,5 @@ export const contactApi = {
       'New project enquiry',
       payload,
       'Thanks for reaching out — our team will get back to you within one business day.'
-    ),
-};
-
-export const careersApi = {
-  submit: (payload) =>
-    submitForm(
-      'New career application',
-      payload,
-      "Thanks for reaching out — we'll review your application and get back to you if there's a fit."
     ),
 };

@@ -14,7 +14,7 @@ const NAV_LINKS = [
 const AFTER_LINKS = [
   { key: 'technologies', label: 'Technologies', to: '/technologies' },
   { key: 'portfolio', label: 'Portfolio', to: '/portfolio' },
-  { key: 'careers', label: 'Careers', to: '/careers' },
+  { key: 'contact', label: 'Contact', to: '/contact' },
 ];
 
 const PILL_ID = 'nav-hover-pill';
